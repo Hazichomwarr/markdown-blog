@@ -5,6 +5,10 @@ const router = express.Router();
 router.get("/new", (req, res) => {
   res.render("articles/new", { article: new Article() });
 });
+router.get("/edit/:id", async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  res.render("articles/edit", { article });
+});
 router.get("/:id", async (req, res) => {
   const article = await Article.findById(req.params.id);
   if (article == null) res.redirect("/");
@@ -27,6 +31,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const article = await Article.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect(`/articles/${article.id}`);
+  } catch (e) {
+    console.log(e.message);
+    res.redirect("/");
+  }
+});
 router.delete("/:id", async (req, res) => {
   try {
     await Article.findByIdAndDelete(req.params.id);
