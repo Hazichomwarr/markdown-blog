@@ -15,6 +15,13 @@
         <a href="/articles/<%= article.id %>" class="btn btn-primary"
           >Read More</a
         >
+        <form
+          class="d-inline"
+          method="post"
+          action="/articles/<%= article.id %>?_method=DELETE"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
       </div>
     </div>
     <% }) %>
